@@ -43,16 +43,24 @@
     <Compile Include="Chromosomes\Chromosome.cs" />
     <Compile Include="Chromosomes\Genes\Gene.cs" />
     <Compile Include="Chromosomes\IChromosome.cs" />
+    <Compile Include="Crossovers\CrossoverBase.cs" />
+    <Compile Include="Crossovers\OnePointCrossover.cs" />
     <Compile Include="GeneticAlgorithmEngine.cs" />
     <Compile Include="Crossovers\ICrossover.cs" />
     <Compile Include="IGAEngine.cs" />
+    <Compile Include="Mutations\BaseMutation.cs" />
+    <Compile Include="Mutations\FlipGeneMutation.cs" />
     <Compile Include="Mutations\IMutation.cs" />
     <Compile Include="Populations\IPopulation.cs" />
     <Compile Include="Populations\Population.cs" />
     <Compile Include="Problems\IProblem.cs" />
     <Compile Include="Problems\MaximumOfQuadraticFuncionInRangeProblem.cs" />
+    <Compile Include="Randomizer.cs" />
+    <Compile Include="RandomizerProvider.cs" />
     <Compile Include="Selections\ISelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Selections\RouletteWheelSelection.cs" />
+    <Compile Include="Selections\SelectionBase.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
