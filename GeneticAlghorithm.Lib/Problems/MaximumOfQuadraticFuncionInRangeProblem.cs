@@ -6,12 +6,14 @@ namespace GeneticAlghorithm.Lib.Problems
 {
     public class MaximumOfQuadraticFuncionInRangeProblem : IProblem<int>
     {
-        public int ChromosomeLength { get; set; }
-        public int[] AllowedValues { get; set; }
+        public int ChromosomeLength { get; set; } = 5;
+        public int[] AllowedValues { get; set; } = {0, 1};
         public double FitnessFunc(IChromosome<int> chromosome)
         {
             int X = Convert.ToInt32(
                 string.Join("", chromosome.Genes.Select(g => g.Value.ToString())), 2);
+
+            if (X == 0) return 1 / double.MaxValue;
 
             const double A = -10.0;
             const double B = 50.0;
