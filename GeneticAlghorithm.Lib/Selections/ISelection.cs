@@ -9,6 +9,6 @@ namespace GeneticAlghorithm.Lib.Selections
 {
     public interface ISelection<T>
     {
-        IEnumerable<IChromosome<T>> SelectChromosomes(int populationSize, IPopulation<T> population);
+        IPopulation<T> SelectChromosomes(IPopulation<T> population);
     }
 }
