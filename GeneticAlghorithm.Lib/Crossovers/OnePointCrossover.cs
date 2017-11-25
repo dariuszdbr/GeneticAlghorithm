@@ -12,7 +12,7 @@ namespace GeneticAlghorithm.Lib.Crossovers
 
         public override IPopulation<T> PerformCrossover(double crossoverChance, IPopulation<T> population)
         {
-            var childrens = new List<IChromosome<T>>(population.PopulationSize);
+            var childrens = new List<IChromosome<T>>();
             for (int index = 0; index < population.PopulationSize; index += 2)
             {
                 if (RandomizerProvider.Current.GetDouble() > crossoverChance)
