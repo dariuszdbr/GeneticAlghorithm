@@ -1,14 +1,19 @@
 ﻿namespace GeneticAlghorithm.Lib.Chromosomes.Genes
 {
-    public class Gene<T>
+    public class Gene
     {
-        public T Value { get; private set; }
+        public object Value { get; private set; }
 
-        public Gene(T value)
+        public Gene(object value)
         {
             Value = value;
         }
+
+        private Gene()
+        {
+            
+        }
         
-       public Gene<T> CreateNew(T value) => new Gene<T>(value);
+       public Gene CreateNew(object value) => new Gene(value);
     }
 }
