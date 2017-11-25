@@ -18,12 +18,12 @@ namespace GeneticAlghorithm.Lib
         private readonly double _crossoverChance;
         private readonly double _mutationChance;
 
-	    public int GenerationNumber { get; private set; } = 0;
-	    public IProblem<T> Problem { get; set; }
-	    public IMutation<T> Mutation { get; set; }
-	    public ICrossover<T> Crossover { get; set; }
-	    public ISelection<T> Selection { get; set; }
-	    public IPopulation<T> Population { get; set; }
+	    private int GenerationNumber { get; set; } = 0;
+	    private IProblem<T> Problem { get; set; }
+	    private IMutation<T> Mutation { get; set; }
+	    private ICrossover<T> Crossover { get; set; }
+	    private ISelection<T> Selection { get; set; }
+	    private IPopulation<T> Population { get; set; }
 
 	    private IEnumerable<double> _fittness;
 
