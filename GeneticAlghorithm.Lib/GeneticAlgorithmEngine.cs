@@ -37,6 +37,7 @@ namespace GeneticAlghorithm.Lib
             this.Mutation = mutation ?? throw new ArgumentNullException(nameof(mutation));
             this.Crossover = crossover ?? throw new ArgumentNullException(nameof(crossover));
             this.Selection = selection ?? throw new ArgumentNullException(nameof(selection));
+            this.Population = new Population<T>(populationSize, problem);
         }
 
         public void InitializePopulation()
@@ -46,28 +47,27 @@ namespace GeneticAlghorithm.Lib
 
         public void GenerateNextGeneration()
         {
-            this.Population = NextPopulation();
+            this.Population = Select();
             this.Population = Cross();
             this.Population = Mutate();
         }
 
         public int GenerationNumber { get; }
-        public IChromosome<T> BestChromosome { get; }
+        public IChromosome<T> BestChromosome => Population.BestChromosome;
 
-        private IEnumerable<IChromosome<T>> Mutate()
+        private IPopulation<T> Mutate()
         {
-            return this.Mutation.Mutate(this._mutationChance, this.Population.Generation);
+            return this.Mutation.Mutate(this._mutationChance, this.Population);
         }
 
-        private IEnumerable<IChromosome<T>> Cross()
+        private IPopulation<T> Cross()
         {
-
-            return this.Crossover.Cross(this._crossoverChance, this.Population.Generation);
+            return this.Crossover.Cross(this._crossoverChance, this.Population);
         }
-
-        private IEnumerable<IChromosome<T>> NextPopulation()
+        
+        private IPopulation<T> Select()
         {
-            return Selection.SelectChromosomes(this._populationSize, this.Population.Generation);
+            return Selection.SelectChromosomes(this.Population);
         }
 
         public void Run(Func<bool> predicate, bool writeDetails = false)

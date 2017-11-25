@@ -1,4 +1,5 @@
-﻿using GeneticAlghorithm.Lib.Chromosomes;
+﻿using System;
+using GeneticAlghorithm.Lib.Chromosomes;
 
 namespace GeneticAlghorithm.Lib
 {
@@ -7,6 +8,7 @@ namespace GeneticAlghorithm.Lib
         void GenerateNextGeneration();
         int GenerationNumber { get; }
         IChromosome<T> BestChromosome { get; }
-        
+
+        void Run(Func<bool> predicate, bool writeDetails);
     }
 }
