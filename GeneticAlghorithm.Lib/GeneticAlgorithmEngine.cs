@@ -18,17 +18,17 @@ namespace GeneticAlghorithm.Lib
         private readonly double _crossoverChance;
         private readonly double _mutationChance;
 
-        public IProblem<T> Problem { get; private set; }
-        public IMutation<T> Mutation { get; private set; }
-        public ICrossover<T> Crossover { get; private set; }
-        public ISelection<T> Selection { get; private set; }
-        public IPopulation<T> Population { get; private set; }
-        
-        private IEnumerable<double> _fittness;
+	    public int GenerationNumber { get; private set; } = 0;
+	    public IProblem<T> Problem { get; set; }
+	    public IMutation<T> Mutation { get; set; }
+	    public ICrossover<T> Crossover { get; set; }
+	    public ISelection<T> Selection { get; set; }
+	    public IPopulation<T> Population { get; set; }
 
-        
+	    private IEnumerable<double> _fittness;
 
-        public GeneticAlgorithmEngine(int populationSize, double crossoverChence, double mutationChence, IProblem<T> problem, IMutation<T> mutation, ICrossover<T> crossover, ISelection<T> selection)
+
+	    public GeneticAlgorithmEngine(int populationSize, double crossoverChence, double mutationChence, IProblem<T> problem, IMutation<T> mutation, ICrossover<T> crossover, ISelection<T> selection)
         {
             this._populationSize = populationSize;
             this._crossoverChance = crossoverChence;
@@ -37,23 +37,22 @@ namespace GeneticAlghorithm.Lib
             this.Mutation = mutation ?? throw new ArgumentNullException(nameof(mutation));
             this.Crossover = crossover ?? throw new ArgumentNullException(nameof(crossover));
             this.Selection = selection ?? throw new ArgumentNullException(nameof(selection));
-            this.Population = new Population<T>(populationSize, problem);
+            this.Population = new Population<T>(_populationSize, problem);
         }
 
-        public void InitializePopulation()
+	    private void InitializePopulation()
         {
             Population.InitializePopulation();
         }
 
-        public void GenerateNextGeneration()
+	    public void GenerateNextGeneration()
         {
             this.Population = Select();
             this.Population = Cross();
             this.Population = Mutate();
         }
 
-        public int GenerationNumber { get; }
-        public IChromosome<T> BestChromosome => Population.BestChromosome;
+	    public IChromosome<T> BestChromosome => Population.BestChromosome;
 
         private IPopulation<T> Mutate()
         {
@@ -73,27 +72,37 @@ namespace GeneticAlghorithm.Lib
         public void Run(Func<bool> predicate, bool writeDetails = false)
         {
             this.InitializePopulation();
-           // if (writeDetails) WritePopulationDetails();
-                
-            while (predicate())
+            if (writeDetails) WritePopulationDetails();
+	        Console.WriteLine(LabelForBestChromosome());
+
+			while (predicate())
             {
                 this.GenerateNextGeneration();
-            }
+	            if (writeDetails) WritePopulationDetails();
+	            Console.WriteLine(LabelForBestChromosome());
+			}
         }
 
-        //private void WritePopulationDetails()
-        //{
-        //    Console.WriteLine(GetLabel());
-        //}
+		private void WritePopulationDetails()
+		{
+			Console.WriteLine($"Generation: {++GenerationNumber}" +
+			                  $"{Environment.NewLine}" +
+			                  LabelForChromosomes() +
+			                  $"{Environment.NewLine}");
+		}
 
-        //private string GetLabel()
-        //{
-        //    var _label = new StringBuilder();
+	    private string LabelForBestChromosome()
+	    {
+		    return $"Best: {BestChromosome} {Environment.NewLine}";
+	    }
 
-        //    foreach (var chromosome in Population)
-        //    {
-                
-        //    }
-        //}
-    }
+	    private string LabelForChromosomes()
+		{
+			var label = new StringBuilder();
+			foreach (var chromosome in Population.Generation)
+				label.Append(chromosome + Environment.NewLine);
+
+			return label.ToString();
+		}
+	}
 }
