@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using GeneticAlghorithm.Lib.Chromosomes;
+using GeneticAlghorithm.Lib.Populations;
 
 namespace GeneticAlghorithm.Lib.Mutations
 {
     public interface IMutation<T>
     {
-        IEnumerable<IChromosome<T>> Mutate(double mutationChance, IList<IChromosome<T>> population);
+        IPopulation<T> Mutate(double mutationChance, IPopulation<T> population);
     }
 }
